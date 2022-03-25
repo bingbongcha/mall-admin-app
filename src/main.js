@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -6,7 +7,7 @@ import './plugins/ant-design-vue';
 import '@/assets/css/reset.css';
 
 Vue.config.productionTip = false;
-
+store.dispatch("user/whoAmI")
 new Vue({
   router,
   store,

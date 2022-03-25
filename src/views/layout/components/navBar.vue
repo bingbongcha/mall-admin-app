@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
         <a-button type="primary" @click="toggleCollapsed">
-          <a-icon :type="$store.state.collapsed ? 'menu-unfold' : 'menu-fold'" />
+          <a-icon :type="$store.state.operation.collapsed ? 'menu-unfold' : 'menu-fold'" />
         </a-button>
 
         <!-- 面包屑 -->
@@ -20,8 +20,8 @@
 
         <!-- 用户操作 -->
         <ul class="userinfo">
-          <li>欢迎xxx</li>
-          <li>退出</li>
+          <li>{{$store.state.user.username}}</li>
+          <li @click="handleLoginOut">退出</li>
         </ul>
       </div>
 </template>
@@ -30,7 +30,12 @@
 export default {
   methods: {
     toggleCollapsed() {
-      this.$store.commit('changeCollapse');
+      this.$store.commit('operation/changeCollapse');
+    },
+    handleLoginOut() {
+      this.$store.dispatch('user/loginOut').then(() => {
+        this.$router.push('/login');
+      });
     },
   },
 };

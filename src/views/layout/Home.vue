@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <LeftMenu />
-    <div class="main-app" :class="{ collapsed: $store.state.collapse }">
+    <div class="main-app" :class="{ collapsed: $store.state.operation.collapse }">
         <NavBar />
         <RouterView />
     </div>

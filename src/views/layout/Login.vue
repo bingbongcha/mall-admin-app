@@ -31,8 +31,6 @@
 </template>
 
 <script>
-import loginApi from '@/api/login';
-
 export default {
   data() {
     const validateEmail = (rule, value, callback) => {
@@ -74,7 +72,7 @@ export default {
     submitForm() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          loginApi.login(this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({
               name: 'Home',
             });

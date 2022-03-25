@@ -5,7 +5,7 @@
         :default-open-keys="['sub1']"
         mode="inline"
         theme="dark"
-        :inline-collapsed="$store.state.collapse"
+        :inline-collapsed="$store.state.operation.collapse"
       >
         <a-menu-item key="1">
           <a-icon type="pie-chart" />
