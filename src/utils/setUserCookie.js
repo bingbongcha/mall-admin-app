@@ -20,7 +20,7 @@ export function getUserCookie(){
 }
 
 export function removeUserCookie(){
-   Cookie.remove("usename")
+   Cookie.remove("username")
    Cookie.remove("appkey")
    Cookie.remove("role")
    Cookie.remove("email")
