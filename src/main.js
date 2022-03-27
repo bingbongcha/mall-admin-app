@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue';
+import VCharts from 'v-charts';
 import App from './App.vue';
 import router from './router';
 import store from './store';
@@ -8,6 +9,7 @@ import '@/assets/css/reset.css';
 
 Vue.config.productionTip = false;
 store.dispatch("user/whoAmI")
+Vue.use(VCharts)
 new Vue({
   router,
   store,

@@ -1,33 +1,45 @@
 <template>
   <div class="navbar">
-        <a-button type="primary" @click="toggleCollapsed">
-          <a-icon :type="$store.state.operation.collapsed ? 'menu-unfold' : 'menu-fold'" />
-        </a-button>
+    <a-button type="primary" @click="toggleCollapsed">
+      <a-icon
+        :type="$store.state.operation.collapsed ? 'menu-unfold' : 'menu-fold'"
+      />
+    </a-button>
 
-        <!-- 面包屑 -->
-        <div class="breadcrumb">
-          <a-breadcrumb>
-            <a-breadcrumb-item>Home</a-breadcrumb-item>
-            <a-breadcrumb-item
-              ><a href="">Application Center</a></a-breadcrumb-item
-            >
-            <a-breadcrumb-item
-              ><a href="">Application List</a></a-breadcrumb-item
-            >
-            <a-breadcrumb-item>An Application</a-breadcrumb-item>
-          </a-breadcrumb>
-        </div>
+    <!-- 面包屑 -->
+    <div class="breadcrumb">
+      <a-breadcrumb v-if="currentRoute.length > 1">
+        <a-breadcrumb-item>{{
+          currentRoute[0] ? currentRoute[0].meta.title : ""
+        }}</a-breadcrumb-item>
+        <a-breadcrumb-item
+          ><a href="">{{
+            currentRoute[1] ? currentRoute[1].meta.title : ""
+          }}</a></a-breadcrumb-item
+        >
+      </a-breadcrumb>
+    </div>
 
-        <!-- 用户操作 -->
-        <ul class="userinfo">
-          <li>{{$store.state.user.username}}</li>
-          <li @click="handleLoginOut">退出</li>
-        </ul>
-      </div>
+    <!-- 用户操作 -->
+    <ul class="userinfo">
+      <li>{{ $store.state.user.username }}</li>
+      <li @click="handleLoginOut">退出</li>
+    </ul>
+  </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      currentRoute: this.$router.currentRoute.matched,
+    };
+  },
+  watch: {
+    $route() {
+      this.currentRoute = this.$router.currentRoute.matched;
+    },
+  },
   methods: {
     toggleCollapsed() {
       this.$store.commit('operation/changeCollapse');
@@ -42,5 +54,4 @@ export default {
 </script>
 
 <style>
-
 </style>

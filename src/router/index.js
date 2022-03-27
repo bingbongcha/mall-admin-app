@@ -42,6 +42,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
+    redirect : "/index",
     component: Home,
     meta: { auth: true, title: "首页" ,icon : "home"},
     children: [

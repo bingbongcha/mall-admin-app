@@ -11,7 +11,20 @@
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <style>
+        .loading-img{
+          position: fixed;
+          width: 100px;
+          height: 100px;
+          top: 50%;
+          left: 50%;
+          margin-top: -50px;
+          margin-left: -50px;
+        }
+      </style>
+      <img class="loading-img" src="./img/loading.gif" alt="">
+    </div>
     <!-- built files will be auto injected -->
   </body>
 </html>
