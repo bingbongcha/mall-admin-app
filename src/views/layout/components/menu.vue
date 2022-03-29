@@ -6,7 +6,7 @@
           ? $router.currentRoute.matched[1].name
           : '',
       ]"
-      :default-open-keys="[$router.currentRoute.matched[0].name]"
+      :default-open-keys="[this.$router.currentRoute.matched[0].name]"
       mode="inline"
       theme="dark"
       :inline-collapsed="$store.state.operation.collapse"
@@ -16,11 +16,13 @@
           <span slot="title"
             ><a-icon :type="r.meta.icon" /><span>{{ r.meta.title }}</span></span
           >
-          <a-menu-item v-for="c in r.children" :key="c.name">
-            <RouterLink :to="{ name: c.name }">
-              <a-icon :type="c.meta.icon" />{{ c.meta.title }}
-            </RouterLink>
-          </a-menu-item>
+          <template v-for="c in r.children">
+            <a-menu-item v-if="!c.meta.hidden" :key="c.name">
+              <RouterLink :to="{ name: c.name }">
+                <a-icon :type="c.meta.icon" />{{ c.meta.title }}
+              </RouterLink>
+            </a-menu-item>
+          </template>
         </a-sub-menu>
       </template>
     </a-menu>

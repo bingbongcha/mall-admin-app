@@ -11,14 +11,15 @@ const roleToRoute = {
     { name: "Product" },
     { name: "ProductList" },
     { name: "ProductAdd" },
+    { name: "ProductEdit" },
   ],
 }
 
 export default function getMenuRoute(role, routes) {
-  const allowRoutesName = roleToRoute[role].map(i=>i.name)
-  const resultRoute = routes.filter(r=>{
-    if(allowRoutesName.indexOf(r.name) !== -1){
-      r.children = r.children.filter(r=>allowRoutesName.indexOf(r.name) !== -1)
+  const allowRoutesName = roleToRoute[role].map(i => i.name)
+  const resultRoute = routes.filter(r => {
+    if (allowRoutesName.indexOf(r.name) !== -1) {
+      r.children = r.children.filter(r => allowRoutesName.indexOf(r.name) !== -1)
       return true
     }
     return false

@@ -6,6 +6,8 @@ import router from './router';
 import store from './store';
 import './plugins/ant-design-vue';
 import '@/assets/css/reset.css';
+// 下面是为了解决控制台提示
+import 'default-passive-events'
 
 Vue.config.productionTip = false;
 store.dispatch("user/whoAmI")

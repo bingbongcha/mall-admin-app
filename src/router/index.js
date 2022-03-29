@@ -15,25 +15,31 @@ const asyncRouter = [
     path: "/product",
     name: "Product",
     component: Home,
-    meta: { auth: true, title: "商品",icon : "shop" },
+    meta: { auth: true, title: "商品", icon: "shop" },
     children: [
       {
         path: "list",
         name: "ProductList",
         component: () => import("../views/pages/ProductList.vue"),
-        meta: { auth: true, title: "商品列表" ,icon : "unordered-list"}
+        meta: { auth: true, title: "商品列表", icon: "unordered-list" }
       },
       {
         path: "add",
         name: "ProductAdd",
         component: () => import("../views/pages/ProductAdd.vue"),
-        meta: { auth: true, title: "添加商品",icon : "file-add" }
+        meta: { auth: true, title: "添加商品", icon: "file-add" }
+      },
+      {
+        path: "edit/:id",
+        name: "ProductEdit",
+        component: () => import("../views/pages/ProductAdd.vue"),
+        meta: { auth: true, title: "编辑商品", icon: "file-add", hidden: true }
       },
       {
         path: "category",
         name: "Category",
         component: () => import("../views/pages/Category.vue"),
-        meta: { auth: true, title: "类目管理",icon : "appstore" }
+        meta: { auth: true, title: "类目管理", icon: "appstore" }
       }
     ]
   }
@@ -42,15 +48,15 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    redirect : "/index",
+    redirect: "/index",
     component: Home,
-    meta: { auth: true, title: "首页" ,icon : "home"},
+    meta: { auth: true, title: "首页", icon: "home" },
     children: [
       {
         path: "index",
         name: "Index",
         component: () => import("../views/pages/Index.vue"),
-        meta: { auth: true, title: "统计" ,icon : "bar-chart"}
+        meta: { auth: true, title: "统计", icon: "bar-chart" }
       }
     ]
   },
@@ -58,7 +64,7 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: { title: "登录" ,hidden : true}
+    meta: { title: "登录", hidden: true }
   },
   // {
   //   path: '/about',
@@ -83,13 +89,15 @@ function setRouter() {
   })
 }
 router.beforeEach((to, from, next) => {
-  if (to.meta.auth === true || isAuth(to.path, asyncRouter) === true) {
+  if (to.meta.auth === true || isAuth(to.path, asyncRouter)) {
     // 页面需要鉴权
     if (store.state.user.username && store.state.user.appkey && store.state.user.role) {
-      // 虽然需要鉴权，但已是登录状态
+      // 已登录，但是有两种情况 1. 点击登录   2. 切换页面
+      //1情况要路由信息成功生成后才能跳转页面
+      //2情况直接通过就行
       if (!isAddRoutes) {
-        setRouter().then(()=>{
-          next()
+        setRouter().then(() => {
+          next({ ...to, replace: true })
         })
         isAddRoutes = true
       }
@@ -104,13 +112,15 @@ router.beforeEach((to, from, next) => {
           message.error("该页面需要登录，请先登录")
           return next("/login")
         } else {
+          // 恢复登录成功了，这时由于刷新页面，路由信息没了，要重新生成路由信息，而且
+          // 应该等到路由信息生成之后再渲染页面
           if (!isAddRoutes) {
-            setRouter().then(()=>{
-              next()
+            setRouter().then(() => {
+              next({ ...to, replace: true })
             })
             isAddRoutes = true
           }
-          return next()
+          // return next()
         }
       })
 

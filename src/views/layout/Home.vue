@@ -1,9 +1,12 @@
 <template>
   <div class="home-container">
-    <LeftMenu />
-    <div class="main-app" :class="{ collapsed: $store.state.operation.collapse }">
-        <NavBar />
-        <RouterView />
+    <LeftMenu :key="key" />
+    <div
+      class="main-app"
+      :class="{ collapsed: $store.state.operation.collapse }"
+    >
+      <NavBar />
+      <RouterView />
     </div>
   </div>
 </template>
@@ -13,6 +16,16 @@ import LeftMenu from './components/menu.vue';
 import NavBar from './components/navBar.vue';
 
 export default {
+  data() {
+    return {
+      key: new Date().getTime(),
+    };
+  },
+  watch: {
+    $route() {
+      this.key = new Date().getTime();
+    },
+  },
   components: {
     LeftMenu,
     NavBar,

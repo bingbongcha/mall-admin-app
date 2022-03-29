@@ -13,9 +13,9 @@
           currentRoute[0] ? currentRoute[0].meta.title : ""
         }}</a-breadcrumb-item>
         <a-breadcrumb-item
-          ><a href="">{{
+          ><RouterLink :to="{name  : currentRoute[1].name}">{{
             currentRoute[1] ? currentRoute[1].meta.title : ""
-          }}</a></a-breadcrumb-item
+          }}</RouterLink ></a-breadcrumb-item
         >
       </a-breadcrumb>
     </div>
