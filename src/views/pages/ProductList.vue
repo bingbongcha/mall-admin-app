@@ -2,7 +2,7 @@
   <div class="productlist-container">
     <Search :data="categoryList" @submit="handleSearchSubmit" />
     <a-button type="primary" class="product-add-btn">
-      <router-link :to="{name : 'ProductAdd'}">添加商品</router-link>
+      <router-link :to="{ name: 'ProductAdd' }">添加商品</router-link>
     </a-button>
     <Table
       :data="tableData"
@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import Search from '@/components/Search.vue';
-import { getAllCategory } from '@/api/category';
-import Table from '@/components/Table.vue';
-import { getProducts, delOneProduct } from '@/api/product';
+import Search from "@/components/Search.vue";
+import { getAllCategory } from "@/api/category";
+import Table from "@/components/Table.vue";
+import { getProducts, delOneProduct } from "@/api/product";
 
 export default {
   data() {
@@ -54,10 +54,14 @@ export default {
         ...this.searchForm,
       }).then((res) => {
         this.page.total = res.total;
-        this.tableData = res.data.map((item) => ({
-          ...item,
-          categoryName: this.categoryMap[item.category].name,
-        }));
+        this.tableData = res.data.map((item) => {
+          return {
+            ...item,
+            categoryName: this.categoryMap[item.category]
+              ? this.categoryMap[item.category].name
+              : "",
+          };
+        });
       });
     },
     handleSearchSubmit(form) {
@@ -70,7 +74,7 @@ export default {
     },
     handleRemoveProduct(record) {
       this.$confirm({
-        title: '确认删除',
+        title: "确认删除",
         content: () => (
           <div style="color:red;">{`确认删除标题为:${record.title}的商品吗`}</div>
         ),
@@ -80,7 +84,7 @@ export default {
           });
         },
         onCancel() {},
-        class: 'confirm-box',
+        class: "confirm-box",
       });
     },
   },
